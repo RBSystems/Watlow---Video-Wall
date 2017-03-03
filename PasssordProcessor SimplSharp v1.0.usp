@@ -1,0 +1,278 @@
+/*******************************************************************************************
+  SIMPL+ Module Information
+  (Fill in comments below)
+*******************************************************************************************/
+/*
+Dealer Name:
+System Name:
+System Number:
+Programmer:
+Comments:
+*/
+
+/*******************************************************************************************
+  Compiler Directives
+  (Uncomment and declare compiler directives as needed)
+*******************************************************************************************/
+#ENABLE_DYNAMIC
+#SYMBOL_NAME "Password Store And Recall Class v1.1"
+#CATEGORY "46" "#InProgress-DEBUGGING" // Custom
+#PRINT_TO_TRACE
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+#USER_SIMPLSHARP_LIBRARY	"PasssordProcessor"
+
+/*******************************************************************************************
+  DIGITAL, ANALOG and SERIAL INPUTS and OUTPUTS
+  (Uncomment and declare inputs and outputs as needed)
+*******************************************************************************************/
+DIGITAL_INPUT 	Debug,
+				Recall,
+				Store,
+				Compare,
+				UpdateUsernames,
+				SelectedStore[16];
+
+ANALOG_INPUT 	CountIn;
+
+STRING_INPUT	FilePath[24],
+				UserInput[16],
+				UserNames[16][24]; 
+                    
+ANALOG_OUTPUT	PasswordCount;
+
+DIGITAL_OUTPUT 	Busy,Failed,
+				Passed[16];
+
+String_Output	sUserNames[16];
+
+               
+
+
+//******************** GLOBAL VARIABLES *********************************//
+PasswordStoreAndRecall myPSR;	//Password Class from SimplSharp
+
+/****************************--PARAMETERS--***********************************/
+STRING_PARAMETER		BackDoor[16];
+
+/****************************--PARAMETER PROPTERIES--*************************/
+#BEGIN_PARAMETER_PROPERTIES BackDoor
+   propValidUnits = unitString;
+   propDefaultUnit = unitString;
+   propDefaultValue = "3108";
+#END_PARAMETER_PROPERTIES
+
+
+
+                    
+//***********FUNCTIONS*************************************/
+Function DebugDump()
+{
+	integer i;
+
+    If (debug)
+	{	Print("***Debug Dump Incoming***");
+		For (i = 0 to myPSR.iPwordCount -1)
+		{
+			print("Name: %s\n",myPSR.userID[i]);
+			print("Pin: %s\n",myPSR.code[i]);
+		}
+    }            
+}
+
+
+
+//**************************EVENTS*******************************/
+
+
+Change FilePath
+{
+	myPSR.SetFilePath(FilePath);
+}
+    
+
+Push Recall
+{
+    integer i,j;
+	Pulse(150, Busy);
+	myPSR.ReadFile();
+	delay(100);
+ 	   
+    For (j = 0 to myPSR.iPwordCount-1)
+	{
+		sUserNames[j+1] = myPSR.userID[j];
+	}	
+     
+	PasswordCount = myPSR.iPwordCount;
+	DebugDump();
+}
+     
+Push Debug
+{
+	integer i;
+    
+	myPSR.Debug = 1;
+	
+	DebugDump();
+}
+
+Release Debug
+{
+    myPSR.Debug = 0;
+	
+}
+     
+Push Store
+{
+	integer i;
+
+    Pulse(200, Busy);
+	For (i = 0 to myPSR.iPwordCount-1)
+	{
+		if (IsSignalDefined(UserNames[i+1]))
+			{
+				myPSR.userID[i] = UserNames[i+1];
+			}
+	}
+
+    delay(20);
+	myPSR.WriteFile();
+	delay(100);
+	myPSR.ReadFile();
+
+}
+
+Push UpdateUsernames
+{
+	integer i;
+    Pulse(200, Busy);
+
+	For (i = 0 to myPSR.iPwordCount-1)
+	{
+		if (IsSignalDefined(UserNames[i+1]))
+			{
+				myPSR.userID[i] = UserNames[i+1];
+			}
+	}
+      
+	myPSR.WriteFile();
+	delay(100);
+	myPSR.ReadFile();
+
+}
+
+Push SelectedStore
+{
+	integer el;
+
+	el = getlastmodifiedarrayindex()-1;	//-1 to accomodate the zero based array in c#
+    Pulse(200, Busy);
+	MyPSR.ReadFile();
+	delay(100);
+	myPSR.code[el] = UserInput;
+	myPSR.userID[el] = UserNames[el+1]; //Added 10-7-15
+	delay(100);
+	myPSR.WriteFile();
+	delay(100);
+	myPSR.ReadFile();
+
+
+}
+
+
+/*
+Change UserInput
+{
+	integer el;
+ 
+  	Pulse(200, Busy);
+	for (el = 1 to 16)
+	{
+		if (SelectedStore[el])	
+			{	
+				MyPSR.code[el-1] = UserInput; 
+				delay(100);
+				myPSR.WriteFile();
+				delay(100);
+				myPSR.ReadFile();
+			}
+	}
+
+}
+*/
+
+
+push Compare
+{
+	integer iPassed;
+
+	iPassed = myPSR.CompareUserInput(UserInput);
+
+	If (Debug)
+	{
+		Print("Return: %d",myPSR.CompareUserInput(UserInput));
+	}
+
+	switch (iPassed)
+	{
+		Case (0): 	{	Pulse(100,Passed[1]); 	}
+		Case (1): 	{	Pulse(100,Passed[2]); 	}
+		Case (2): 	{	Pulse(100,Passed[3]); 	}
+		Case (3): 	{	Pulse(100,Passed[4]); 	}
+		Case (4):	{	Pulse(100,Passed[5]); 	}
+		Case (5):	{	Pulse(100,Passed[6]); 	}
+		Case (6):	{	Pulse(100,Passed[7]); 	}
+		Case (7): 	{	Pulse(100,Passed[8]); 	}
+		Case (8): 	{	Pulse(100,Passed[9]); 	}
+		Case (9): 	{	Pulse(100,Passed[10]); 	}
+		Case (10): 	{	Pulse(100,Passed[11]); 	}
+		Case (11): 	{	Pulse(100,Passed[12]); 	}
+		Case (12): 	{	Pulse(100,Passed[13]); 	}
+		Case (13): 	{	Pulse(100,Passed[14]); 	}
+		Case (14): 	{	Pulse(100,Passed[15]); 	}
+		Case (15): 	{	Pulse(100,Passed[16]); 	}
+		Case (16): 	{	Pulse(100,Passed[17]); 	}
+		Case (42):	{	Pulse(100,Passed[1]);	} //Backdoor case
+		Case (404): {	Pulse(100,Failed); 		} 
+
+	}
+	
+}
+
+
+Change CountIn
+{
+	integer c;
+	Pulse(150, Busy);
+
+	If (CountIn != c)
+	{
+		myPSR.iPwordCount = CountIn;
+		delay(20);
+		myPSR.WriteFile();
+		delay(100);
+		myPSR.ReadFile();
+	}
+	c = CountIn;
+
+}
+ 
+
+     
+
+
+Function Main()
+{
+	waitforinitializationcomplete();
+              
+	SetArray(UserNames, "");
+	myPSR.SetFilePath(FilePath);
+	delay(100);
+	myPSR.ReadFile();
+	myPSR.myBackDoor = BackDoor;
+	
+
+
+}
+

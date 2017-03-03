@@ -1,0 +1,118 @@
+
+/*******************************************************************************************
+  SIMPL+ Module Information
+  (Fill in comments below)
+*******************************************************************************************/
+/*
+Dealer Name:
+System Name:
+System Number:
+Programmer:
+Comments:
+*/
+
+/*******************************************************************************************
+  Compiler Directives
+  (Uncomment and declare compiler directives as needed)
+*******************************************************************************************/
+#SYMBOL_NAME "AMX SVSI Decoder SendHex v1"
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+#CATEGORY "46" "#AMX-SVSI" // Custom
+
+
+
+
+#DEFINE_CONSTANT PowerOnCmd		"01 30 41 30 41 30 43 02 43 32 30 33 44 36 30 30 30 31 03 73 0D"
+#DEFINE_CONSTANT PowerOffCmd	"01 30 41 30 41 30 43 02 43 32 30 33 44 36 30 30 30 34 03 76 0D"
+#DEFINE_CONSTANT HDMIInputCmd	"01 30 41 30 45 30 41 02 30 30 36 30 30 30 30 34 03 76 0D"
+
+
+#DEFINE_CONSTANT PowerOnRsp		"01 30 30 41 42 30 45 02 30 30 43 32 30 33 44 36 30 30 30 31 03 76 0D"
+#DEFINE_CONSTANT PowerOffRsp		"01 30 30 41 42 30 45 02 30 30 43 32 30 33 44 36 30 30 30 34 03 73 0D"
+
+
+#DEFINE_CONSTANT Delim			"\r"
+#DEFINE_CONSTANT RspWait		1
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+DIGITAL_INPUT	PowerOn, PowerOff, HDMIInput;
+STRING_INPUT	IP_Addr$[15];
+//BUFFER_INPUT	Rx$[1024];
+    
+//DIGITAL_OUTPUT	PowerOnFb, PowerOffFb;
+STRING_OUTPUT 	Tx$;
+
+
+///////////////////////////////////////////////////////////////////////////////
+Function BuildString(string Addr, string Cmd)
+{
+
+	Makestring(Tx$,"serialhex %d %s %s%s", RspWait, Addr, Cmd, Delim);
+
+}
+
+Function RequestResponse()
+{
+
+ 	makestring(Tx$, "readresponse %s%s", Ip_Addr$, Delim);
+
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+PUSH PowerOn
+{
+ 	BuildString(IP_Addr$, PowerOnCmd);
+	delay(100);
+	//RequestResponse();
+
+}
+
+PUSH PowerOff
+{
+ 	BuildString(IP_Addr$, PowerOffCmd);
+	delay(1000);
+	//RequestResponse();
+
+}
+
+PUSH HDMIInput
+{
+ 	BuildString(IP_Addr$, HDMIInputCmd);
+}
+    
+/*
+
+Threadsafe Change Rx$
+{	
+	string 	hopper$[512];
+		
+ 	WHILE (1) 
+		{	
+			IF (FIND(delim, Rx$))
+				{
+					hopper$ = REMOVE(Delim, Rx$);
+                     
+					Tx$ = hopper$;
+					//IF (FIND(PowerOnRsp,hopper$)) 		{	PowerOnFb = 1; PowerOffFb = 0;	}
+					//ELSE IF (FIND(PowerOffRsp,hopper$))	{	PowerOffFb = 1;	PowerOnFb = 0;	}
+
+				}
+		}
+}
+*/
+
+Function Main()
+{
+   
+    WaitForInitializationComplete();
+
+}
+
+

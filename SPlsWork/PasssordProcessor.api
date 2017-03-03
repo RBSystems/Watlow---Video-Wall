@@ -1,0 +1,31 @@
+namespace PasssordProcessor;
+{
+     class PasswordStoreAndRecall 
+    {
+        // class delegates
+
+        // class events
+
+        // class functions
+        FUNCTION SetPasswordCount ( INTEGER i );
+        FUNCTION SetFilePath ( STRING s );
+        FUNCTION ReadFile ();
+        INTEGER_FUNCTION CompareUserInput ( STRING s );
+        FUNCTION WriteFile ();
+        FUNCTION InitializeFile ();
+        STRING_FUNCTION ToString ();
+        SIGNED_LONG_INTEGER_FUNCTION GetHashCode ();
+
+        // class variables
+        STRING filepath[];
+        INTEGER iPwordCount;
+        STRING myBackDoor[];
+        INTEGER Debug;
+        INTEGER passed[];
+        STRING userID[][];
+        STRING code[][];
+
+        // class properties
+    };
+}
+

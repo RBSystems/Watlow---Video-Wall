@@ -1,0 +1,333 @@
+/*******************************************************************************************
+  SIMPL+ Module Information
+  (Fill in comments below)
+*******************************************************************************************/
+/*
+Dealer Name:	TSI GLOBAL COMPANIES
+System Name:	
+System Number:	
+Programmer:		JEFF PRIDE
+Comments:
+*/
+
+//			Compiler Directives
+// #ENABLE_DYNAMIC
+#SYMBOL_NAME "Q-Sys Level / Mute v0.8"
+#CATEGORY "46" "#Qsys" // Custom
+#OUTPUT_SHIFT	4 
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#DEFINE_CONSTANT	delim 						"\x0A"
+#DEFINE_CONSTANT	cssCmd						"css"
+#DEFINE_CONSTANT	cgCmd						"cg"
+#DEFINE_CONSTANT	cgpAck						"cgpa"
+#DEFINE_CONSTANT	cvRsp						"cv"
+#DEFINE_CONSTANT	changeGroupCreate			"cgc"
+#DEFINE_CONSTANT	changeGroupRemove			"cgr"
+#DEFINE_CONSTANT	changeGroupAdd				"cga"
+#DEFINE_CONSTANT	changeGroupSchedule			"cgs"
+#DEFINE_CONSTANT	changeGroupPoll				"cgp"
+//#DEFINE_CONSTANT	changeGroupPollScheduleTime	10000
+  
+
+                         
+
+
+//			DIGITAL, ANALOG and SERIAL INPUTS and OUTPUTS
+DIGITAL_INPUT 	_skip_, _skip_, _Skip_,_skip_;
+DIGITAL_INPUT	Verbose, MuteToggle, Mute, Unmute,CoreConnected,Poll;
+ANALOG_INPUT	LvlIn;
+BUFFER_INPUT	Rx$[1024]; 
+
+DIGITAL_OUTPUT  Mute_F;
+ANALOG_OUTPUT	LvlOut;
+STRING_OUTPUT 	Tx$;
+
+
+
+//			 Parameters
+STRING_PARAMETER		ObjLvlName[32], ObjMuteName[32];
+INTEGER_PARAMETER		ObjChangeGroup, ObjChangeGroupPollScheduleTime;
+
+//			Parameter Properties
+
+#BEGIN_PARAMETER_PROPERTIES ObjLvlName
+   propValidUnits = unitString;
+   propDefaultUnit = unitString;
+   propDefaultValue = "NameLvl";
+#END_PARAMETER_PROPERTIES
+
+#BEGIN_PARAMETER_PROPERTIES ObjMuteName
+   propValidUnits = unitString;
+   propDefaultUnit = unitString;
+   propDefaultValue = "NameMute";
+#END_PARAMETER_PROPERTIES
+
+#BEGIN_PARAMETER_PROPERTIES ObjChangeGroup
+   propValidUnits = unitDecimal;
+   propDefaultUnit = unitDecimal;
+   propDefaultValue = 1d;
+#END_PARAMETER_PROPERTIES
+
+#BEGIN_PARAMETER_PROPERTIES ObjChangeGroupPollScheduleTime
+   propValidUnits = unitTime;
+   propDefaultUnit = unitTime;
+   propDefaultValue = 10s;
+#END_PARAMETER_PROPERTIES
+                    
+
+                          
+
+Structure Fader {
+					String LvlTag[32];
+					String MuteTag[32];
+					Integer Mute;
+					Signed_Integer	sLvl;
+					Integer ChangeGroup;
+					Integer ChangeGroupPollScheduleTime;
+};
+                 
+
+//			Global Variables
+Nonvolatile INTEGER	iMute;
+Nonvolatile SIGNED_INTEGER	iLvl; 
+Fader thisFader;
+
+                         
+
+String_Function	CreateLevelCommandString(String Tag, Signed_Integer Lvl)
+{
+	String Cmd$[64];
+		
+	MakeString(Cmd$,"%s %s %ld%s", cssCmd, Tag, Lvl, delim);
+	return (Cmd$);
+}
+
+String_Function	CreateMuteCommandString(String Tag, Integer Mute)
+{
+	String Cmd$[64];
+		
+	MakeString(Cmd$,"%s %s %d%s", cssCmd, Tag, Mute, delim);
+	return (Cmd$);
+}
+
+
+
+//			Event Handlers
+PUSH Mute,Unmute,MuteToggle
+{
+	If (Mute) 		{ iMute = 1;}
+	If (Unmute) 	{ iMute = 0;}
+	If (MuteToggle)	{ iMute = !iMute;}
+
+	Mute_F = iMute;
+	thisFader.Mute = iMute;
+	Tx$ = CreateMuteCommandString(thisFader.MuteTag,thisFader.Mute);
+
+
+}
+
+CHANGE LvlIn //WORK IN PROGRESS
+{
+	IF (iLvl != LvlIn)
+		{
+			iLvl = LvlIn;
+			thisFader.sLvl = iLvl;
+		        
+			If ((iLvl >= -100 && iLvl  <= 20)) 
+				{ 
+					Tx$ = CreateLevelCommandString(thisFader.LvlTag, thisFader.sLvl);
+				
+				}
+			Else
+				{ 
+					Trace("Error: LvlIn not formatted correctly (Must be between -100 & 20)"); 
+				}
+		}
+		
+}
+#IF_SERIES3
+THREADSAFE CHANGE Rx$
+{
+    String sTemp$[1024],trash[1024],sName$[128],sLvl$[24],sMute$[16];
+	
+	TRY
+	{
+		WHILE(1)
+			{
+				DO
+				{
+					sTemp$ = GATHER("\x0D\x0A", Rx$);
+
+                  	IF (FIND(cvRsp,sTemp$))
+						{
+							//Typical Responses: 
+							//LeveL: cv "TestLvl" "-34.0dB" -34.00003322\x0D\x0A
+							//Mute: cv "TestMute" "muted" 0 0\x0D\x0A
+						Trash = REMOVE("cv \"",sTemp$);
+						sName$ = REMOVE("\" \"",sTemp$);
+						sName$ = LEFT(sName$,LEN(sName$)-3);
+		
+							If (sName$ = thisFader.LvlTag) 
+								{
+									sLvl$ = REMOVE("\" ",sTemp$);
+									sLvl$ = LEFT(sLvl$, LEN(sLvl$)-2);
+									LvlOut = atosi(sLvl$);
+									thisFader.sLvl = LvlOut;
+
+								}
+							ELSE IF (sName$ = thisFader.MuteTag) 
+								{;	
+
+									sMute$ = REMOVE("\" ",sTemp$);
+									sMute$ = LEFT(sMute$,LEN(sMute$)-2);
+
+	                                IF (sMute$ = "muted") 	{ iMute = 1;}
+									IF (sMute$ = "unmuted") { iMute = 0;}
+									Mute_F = iMute;
+									thisFader.Mute = iMute;
+
+								}
+						}
+
+					IF (FIND(cgpAck,sTemp$))
+						{
+							//Change Group Poll Acknowledgement
+						}
+				}
+				UNTIL (FIND("\x0D\x0A",Rx$) != 0);
+			}
+	}
+
+	CATCH
+	{	
+		TRACE("Exception thrown: %ld. %s", GetExceptionCode(),GetExceptionMEssage());
+	}
+} 
+#ENDIF			
+
+/*****************************************2 SERIES SYSTEMS CANNOT USE THE ATOSI FUCNTION
+#IF_SERIES2
+THREADSAFE CHANGE Rx$
+{
+    String sTemp$[1024],trash[1024],sName$[128],sLvl$[8],sMute$[8];
+	
+		WHILE(1)
+			{
+				DO
+				{
+					sTemp$ = GATHER("\x0D\x0A", Rx$);
+
+                  	IF (FIND(cvRsp,sTemp$))
+						{
+							//Typical Responses: 
+							//LeveL: cv "TestLvl" "-34.0dB" -34.00003322\x0D\x0A
+							//Mute: cv "TestMute" "muted" 0 0\x0D\x0A
+
+						Trash = REMOVE("cv \"",sTemp$);
+						sName$ = REMOVE("\" \"",sTemp$);
+						sName$ = LEFT(sName$,LEN(sName$)-3);
+							
+							If (sName$ = thisFader.LvlTag) 
+								{
+									sLvl$ = REMOVE("\" ",sTemp$);
+									sLvl$ = LEFT(sLvl$, LEN(sLvl$)-2);
+									LvlOut = atosi(sLvl$);
+									thisFader.sLvl = LvlOut;
+
+								}
+							ELSE IF (sName$ = thisFader.MuteTag) 
+								{
+									sMute$ = REMOVE("\" ",sTemp$);
+									sMute$ = LEFT(sMute$,LEN(sMute$)-2);
+
+	                                IF (sMute$ = "muted") 	{ iMute = 1;}
+									IF (sMute$ = "unmuted") { iMute = 0;}
+									Mute_F = iMute;
+									thisFader.Mute = iMute;
+
+								}
+						}
+
+					IF (FIND(cgpAck,sTemp$))
+						{
+							//Change Group Poll Acknowledgement
+						}
+				}
+				UNTIL (FIND("\x0D\x0A",Rx$) != 0);
+			}
+} 
+#ENDIF			
+
+ */
+
+
+
+
+
+
+ 
+Push Poll
+{
+	IF (CoreConnected && Verbose)
+	{
+		Makestring(Tx$,"%s %d\x0A",changeGroupCreate, thisFader.ChangeGroup);
+		delay(30);
+		Makestring(Tx$,"%s %d %s\x0A",changeGroupAdd, thisFader.ChangeGroup, thisFader.LvlTag);
+		delay(30);
+		Makestring(Tx$,"%s %d %s\x0A",changeGroupAdd, thisFader.ChangeGroup, thisFader.MuteTag);
+		delay(30);
+		MakeString(Tx$,"%s %d %d\x0A",changeGroupSchedule, thisFader.ChangeGroup, thisFader.changeGroupPollScheduleTime);
+	}
+	ELSE IF (CoreConnected)
+	{
+		MAKESTRING(Tx$,"%s %s\x0A",cgCmd,thisFader.LvlTag);
+		DELAY(30);
+		MAKESTRING(Tx$,"%s %s\x0A",cgCmd,thisFader.Mutetag);
+	}
+		
+	
+}
+
+Push CoreConnected
+{
+		IF (Verbose)
+			{
+		        Makestring(Tx$,"%s %d\x0A",changeGroupCreate, thisFader.ChangeGroup);
+				delay(30);
+				Makestring(Tx$,"%s %d %s\x0A",changeGroupAdd, thisFader.ChangeGroup, thisFader.LvlTag);
+				delay(30);
+				Makestring(Tx$,"%s %d %s\x0A",changeGroupAdd, thisFader.ChangeGroup, thisFader.MuteTag);
+				delay(30);
+				MakeString(Tx$,"%s %d %d\x0A",changeGroupSchedule, thisFader.ChangeGroup, thisFader.changeGroupPollScheduleTime);
+			}
+}
+         
+
+Release Verbose
+{
+			Makestring(Tx$,"%s %d %s\x0A",changeGroupRemove, thisFader.ChangeGroup, thisFader.LvlTag);
+			delay(30);
+			Makestring(Tx$,"%s %d %s\x0A",changeGroupRemove, thisFader.ChangeGroup, thisFader.MuteTag);
+
+}
+
+
+Function Main()
+{
+    // Initialize declared global and local variables/arrays as needed.
+
+    WaitForInitializationComplete();
+
+	thisFader.LvlTag = ObjLvlName;
+	thisFader.MuteTag = ObjMuteName;
+	thisFader.ChangeGroup = ObjChangeGroup;
+	thisFader.ChangeGroupPollScheduleTime = (ObjChangeGroupPollScheduleTime / 100)*1000;
+	Trace("Poll Schedule Raw: %d",ObjChangeGroupPollScheduleTime);
+	Trace("Poll Schedule *1000: %d",thisFader.ChangeGroupPollScheduleTime);
+
+}
+
+
