@@ -20,8 +20,8 @@
   Name=Password Store And Recall Class v1.1
   SmplCName=PasssordProcessor SimplSharp v1.0.usp
   Code=1
-  SysRev5=4.006
-  SMWRev=3.00.00
+  SysRev5=4.000
+  SMWRev=2.02.05
   InputCue1=Debug
   InputSigType1=Digital
   InputCue2=Recall
@@ -92,9 +92,7 @@
   SymJam=NonExclusive
   FileName=PasssordProcessor SimplSharp v1.0.ush
   SIMPLPlusModuleEncoding=0
-  clz1=Crestron.TV Presets v1.2
-  clz2=AppHelperClasses
-  clz3=PasssordProcessor
+  clz1=PasssordProcessor
 [END]
 [BEGIN]
   ObjTp=Dp
