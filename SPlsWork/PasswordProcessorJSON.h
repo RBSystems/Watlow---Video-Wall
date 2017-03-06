@@ -40,6 +40,7 @@ namespace PasswordProcessorJSON;
      class PasswordOperations 
     {
         // class delegates
+        delegate FUNCTION pushToSimplPlus ( );
 
         // class events
 
@@ -60,5 +61,6 @@ namespace PasswordProcessorJSON;
         STRING ProgrammerName[];
         STRING PasswordCount[];
         STRING FileName[];
+        DelegateProperty pushToSimplPlus gatherChanges;
     };
 

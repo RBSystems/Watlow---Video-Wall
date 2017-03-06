@@ -23,7 +23,7 @@ DbVr=61.06.001.00
 DvcDbVr=82.05.002.00
 PgmNm=Jeff Pride
 DlrNm=TSI GLOBAL COMPANIES, LLC
-CltNm=Watlow - Cafe
+CltNm=Watlow - Video Wall
 JpNo=16-0118
 SmVr=1026
 DvVr=1026
@@ -37,7 +37,7 @@ FltTmp=1
 FpCS=0
 EnType=0
 ZeroOnIoOk=0
-PIT=Slot_1_Cafe
+PIT=Slot_1_VideoWall
 SGMethod=1
 ]
 [
@@ -2759,105 +2759,6 @@ Sy1=0
 Mx1=0
 ]
 [
-ObjTp=Bw
-H=1
-Lx=0
-Ly=0
-Rx=989
-Ry=427
-Xm=-1
-Ym=-1
-SH=81
-Z=100
-Ht=3
-Hi=1
-]
-[
-ObjTp=Bw
-H=1
-Lx=0
-Ly=427
-Rx=989
-Ry=854
-Xm=-1
-Ym=-1
-SH=63
-Z=100
-Ht=1
-Hi=7
-]
-[
-ObjTp=Bw
-H=1
-Lx=0
-Ly=854
-Rx=989
-Ry=1281
-Xm=-1
-Ym=-1
-SH=259
-Z=100
-P=2166
-Ht=4
-Hi=101
-]
-[
-ObjTp=Bw
-H=1
-Lx=989
-Ly=0
-Rx=1978
-Ry=320
-Xm=-1
-Ym=-1
-SH=239
-Z=100
-Ht=3
-Hi=6
-]
-[
-ObjTp=Bw
-H=1
-Lx=989
-Ly=320
-Rx=1978
-Ry=640
-Xm=-1
-Ym=-1
-SH=238
-Z=100
-Ht=4
-Hi=1
-]
-[
-ObjTp=Bw
-H=1
-Lx=989
-Ly=640
-Rx=1978
-Ry=960
-Xm=-1
-Ym=-1
-SH=79
-Z=100
-Ht=4
-Hi=3
-]
-[
-ObjTp=Bw
-H=1
-Lx=989
-Ly=960
-Rx=1978
-Ry=1280
-Xm=-1
-Ym=-1
-SH=247
-Z=100
-Ht=4
-Hi=2
-]
-[
 ObjTp=Et
 H=1
 DvH=669
@@ -5281,42 +5182,42 @@ tO=2
 O1=90
 mP=39
 P1=
-P2=Setting Dispaly 1 Tile Matrix
-P3=Setting Dispaly 1 Tile Matrix
-P4=Setting Dispaly 1 Tile Matrix
-P5=Setting Dispaly 2 Tile Matrix
-P6=Setting Dispaly 2 Tile Matrix
-P7=Setting Dispaly 2 Tile Matrix
-P8=Setting Dispaly 3 Tile Matrix
-P9=Setting Dispaly 3 Tile Matrix
-P10=Setting Dispaly 3 Tile Matrix
-P11=Setting Dispaly 4 Tile Matrix
-P12=Setting Dispaly 4 Tile Matrix
-P13=Setting Dispaly 4 Tile Matrix
-P14=Setting Dispaly 5 Tile Matrix
-P15=Setting Dispaly 5 Tile Matrix
-P16=Setting Dispaly 5 Tile Matrix
-P17=Setting Dispaly 6 Tile Matrix
-P18=Setting Dispaly 6 Tile Matrix
-P19=Setting Dispaly 6 Tile Matrix
-P20=Setting Dispaly 7 Tile Matrix
-P21=Setting Dispaly 7 Tile Matrix
-P22=Setting Dispaly 7 Tile Matrix
-P23=Setting Dispaly 8 Tile Matrix
-P24=Setting Dispaly 8 Tile Matrix
-P25=Setting Dispaly 8 Tile Matrix
-P26=Setting Dispaly 9 Tile Matrix
-P27=Setting Dispaly 9 Tile Matrix
-P28=Setting Dispaly 9 Tile Matrix
-P29=Saving Display 1 Settings
-P30=Saving Display 2 Settings
-P31=Saving Display 3 Settings
-P32=Saving Display 4 Settings
-P33=Saving Display 5 Settings
-P34=Saving Display 6 Settings
-P35=Saving Display 7 Settings
-P36=Saving Display 8 Settings
-P37=Saving Display 9 Settings
+P2=SETTING DISPLAY 1 HORIZONTAL TILE MATRIX
+P3=SETTING DISPLAY 1 VERTICAL TILE MATRIX
+P4=SETTING DISPLAY 1 POSTION IN MATRIX
+P5=SETTING DISPLAY 2 HORIZONTAL TILE MATRIX
+P6=SETTING DISPLAY 2 VERTICAL TILE MATRIX
+P7=SETTING DISPLAY 2 POSTION IN MATRIX
+P8=SETTING DISPLAY 3 HORIZONTAL TILE MATRIX
+P9=SETTING DISPLAY 3 VERTICAL TILE MATRIX
+P10=SETTING DISPLAY 3 POSTION IN MATRIX
+P11=SETTING DISPLAY 4 HORIZONTAL TILE MATRIX
+P12=SETTING DISPLAY 4 VERTICAL TILE MATRIX
+P13=SETTING DISPLAY 4 POSTION IN MATRIX
+P14=SETTING DISPLAY 5 HORIZONTAL TILE MATRIX
+P15=SETTING DISPLAY 5 VERTICAL TILE MATRIX
+P16=SETTING DISPLAY 5 POSTION IN MATRIX
+P17=SETTING DISPLAY 6 HORIZONTAL TILE MATRIX
+P18=SETTING DISPLAY 6 VERTICAL TILE MATRIX
+P19=SETTING DISPLAY 6 POSTION IN MATRIX
+P20=SETTING DISPLAY 7 HORIZONTAL TILE MATRIX
+P21=SETTING DISPLAY 7 VERTICAL TILE MATRIX
+P22=SETTING DISPLAY 7 POSTION IN MATRIX
+P23=SETTING DISPLAY 8 HORIZONTAL TILE MATRIX
+P24=SETTING DISPLAY 8 VERTICAL TILE MATRIX
+P25=SETTING DISPLAY 8 POSTION IN MATRIX
+P26=SETTING DISPLAY 9 HORIZONTAL TILE MATRIX
+P27=SETTING DISPLAY 9 VERTICAL TILE MATRIX
+P28=SETTING DISPLAY 9 POSTION IN MATRIX
+P29=SAVING DISPLAY 1 SETTINGS...
+P30=SAVING DISPLAY 2 SETTINGS...
+P31=SAVING DISPLAY 3 SETTINGS...
+P32=SAVING DISPLAY 4 SETTINGS...
+P33=SAVING DISPLAY 5 SETTINGS...
+P34=SAVING DISPLAY 6 SETTINGS...
+P35=SAVING DISPLAY 7 SETTINGS...
+P36=SAVING DISPLAY 8 SETTINGS...
+P37=SAVING DISPLAY 9 SETTINGS...
 P38=""
 P39=
 ]
@@ -5347,138 +5248,8 @@ ObjVer=1
 PrH=4
 CF=2
 Cmn1=Displays\\
-mC=2
-C1=130
-C2=42
-]
-[
-ObjTp=Sm
-H=130
-SmC=156
-Nm=SUBSYSTEM
-ObjVer=1
-PrH=129
-OpF=0
-HandF=1
-Cmn1=Signage 1
-mC=4
-C1=131
-C2=132
-C3=133
-C4=134
-]
-[
-ObjTp=Sm
-H=131
-SmC=89
-Nm=Serial Send
-ObjVer=1
-PrH=130
-n1I=1
-n1O=1
-OpF=0
-PropF=1
-Cmn1=IP Address\\
-mI=1
-I1=82
-mO=1
-tO=1
-O1=369
-mP=1
-P1=10.10.3.171
-]
-[
-ObjTp=Sm
-H=132
-SmC=155
-Nm=Source Tracking v2.2.umc
-ObjVer=1
-PrH=130
-n1I=28
-n1O=20
-OpF=0
-PropF=1
-mI=28
-I1=16
-I2=17
-I4=8
-I5=10
-I7=6
-I9=7
-I13=5
-I14=5
-I16=5
-I18=29
-I19=5
-I20=5
-I21=5
-I22=5
-I24=18
-I25=18
-I26=18
-I27=18
-I28=18
-mO=20
-tO=20
-O1=9
-O2=11
-O7=6
-O8=18
-O9=7
-O10=18
-O13=5
-O14=5
-O16=370
-O17=5
-O18=5
-O19=5
-O20=5
-mP=4
-P1=14s
-P2=3s
-P3=0s
-P4=0d
-]
-[
-ObjTp=Sm
-H=133
-SmC=103
-Nm=AMX SVSI Decoder Sendhex.usp
-ObjVer=1
-PrH=130
-n1I=3
-n2I=1
-OpF=0
-PropF=1
-mI=4
-I1=9
-I2=11
-I3=370
-I4=369
-mO=1
-tO=1
-O1=117
-mP=1
-P1=
-]
-[
-ObjTp=Sm
-H=134
-SmC=12
-Nm=Set/Reset Latch
-ObjVer=1
-PrH=130
-n1I=2
-n1O=2
-OpF=0
-PropF=1
-mI=2
-I1=9
-I2=11
-mO=2
-tO=2
-O1=8
-O2=10
+mC=1
+C1=42
 ]
 [
 ObjTp=Sm
@@ -6336,6 +6107,8 @@ PrH=12
 CF=2
 n1I=2
 n1O=1
+OpF=0
+HandF=1
 Cmn1=AMX SVSI\\
 mI=4
 I1=82
@@ -6724,33 +6497,13 @@ Nm=//__digital_reserved__
 ]
 [
 ObjTp=Sg
-H=6
-Nm=Signage_1_Warming
-]
-[
-ObjTp=Sg
-H=7
-Nm=Signage_1_Cooling
-]
-[
-ObjTp=Sg
 H=8
 Nm=Signage_1_LCD_Pwr_On_Fb
 ]
 [
 ObjTp=Sg
-H=9
-Nm=Signage_1_LCD_Pwr_On_Go
-]
-[
-ObjTp=Sg
 H=10
 Nm=Signage_1_LCD_Pwr_Off_Fb
-]
-[
-ObjTp=Sg
-H=11
-Nm=Signage_1_LCD_Pwr_Off_Go
 ]
 [
 ObjTp=Sg
@@ -6843,11 +6596,6 @@ SgTp=4
 ObjTp=Sg
 H=28
 Nm=WV_Display_1_Pwr_On_F
-]
-[
-ObjTp=Sg
-H=29
-Nm=//Signage_1_Stream_Change_Os
 ]
 [
 ObjTp=Sg
@@ -8010,17 +7758,6 @@ Nm=Cafe_LCD_7_LCD_Pwr_Off_Fb
 ObjTp=Sg
 H=362
 Nm=Cafe_LCD_7_LCD_Pwr_On_Go
-]
-[
-ObjTp=Sg
-H=369
-Nm=Signage_1_Decoder_IP_Address$
-SgTp=4
-]
-[
-ObjTp=Sg
-H=370
-Nm=Signage_1_HDMI_Input
 ]
 [
 ObjTp=Sg
