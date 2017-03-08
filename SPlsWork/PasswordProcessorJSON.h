@@ -45,6 +45,8 @@ namespace PasswordProcessorJSON;
         // class events
 
         // class functions
+        FUNCTION setDebugFromSimpl ( INTEGER arg );
+        INTEGER_FUNCTION getDebugFromSimpl ();
         FUNCTION BuildPasswordDBase ();
         STRING_FUNCTION CreateJSONPayloadForWrite ();
         FUNCTION UpdateFile ();
@@ -61,6 +63,6 @@ namespace PasswordProcessorJSON;
         STRING ProgrammerName[];
         STRING PasswordCount[];
         STRING FileName[];
-        DelegateProperty pushToSimplPlus gatherChanges;
+        DelegateProperty pushToSimplPlus onPasswordDataBaseUpdate;
     };
 
