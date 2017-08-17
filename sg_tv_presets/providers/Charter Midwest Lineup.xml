@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Provider Name="Charter Midwest" >
+	<Stations>
+
+		<Station Image="ABC.png" Name="ABC" Channel="12" />
+		<Station Image="CBS.png" Name="CBS" Channel="4" />
+		<Station Image="NBC.png" Name="NBC" Channel="5" />
+		<Station Image="FOX.png" Name="FOX" Channel="2" />
+		<Station Image="CW.png" Name="CW" Channel="11" />
+		<Station Image="A&E.png" Name="A&E" Channel="34" />
+		<Station Image="Freeform.png" Name="Freeform" Channel="50" />
+		<Station Image="AMC.png" Name="AMC" Channel="862" />
+		<Station Image="AnimalPlanet.png" Name="Animal Planet" Channel="58" />
+		<Station Image="BBCNetwork.png" Name="BBC Network" Channel="172" />
+		<Station Image="BET.png" Name="BET" Channel="68" />
+		<Station Image="BiographyChannel.png" Name="Biography Channel" Channel="26" />
+		<Station Image="BloombergTelevision.png" Name="Bloomberg Television" Channel="27" />
+		<Station Image="Bravo.png" Name="Bravo" Channel="72" />
+		<Station Image="CartoonNetwork.png" Name="Cartoon Network" Channel="45" />
+		<Station Image="CNBC.png" Name="CNBC" Channel="46" />
+		<Station Image="CNN.png" Name="CNN" Channel="38" />
+		<Station Image="ComedyCentral.png" Name="Comedy Central" Channel="69" />
+		<Station Image="CSPAN.png" Name="CSPAN" Channel="16" />
+		<Station Image="DiscoveryChannel.png" Name="Discovery Channel" Channel="33" />
+		<Station Image="DisneyChannel.png" Name="Disney Channel" Channel="52" />
+		<Station Image="DisneyXD.png" Name="Disney XD" Channel="62" />
+		<Station Image="DIYNetwork.png" Name="DIY Network" Channel="89" />
+		<Station Image="E.png" Name="E" Channel="65" />
+		<Station Image="ESPN-2.png" Name="ESPN-2" Channel="36" />
+		<Station Image="ESPN.png" Name="ESPN" Channel="35" />
+		<Station Image="ESPNClassic.png" Name="ESPN Classic" Channel="215" />
+		<Station Image="ESPNews.png" Name="ESP News" Channel="214" />
+		<Station Image="ESPNU.png" Name="ESPNU" Channel="82" />
+		<Station Image="FoodNetwork.png" Name="Food Network" Channel="62" />
+		<Station Image="FoxBusiness.png" Name="Fox Business" Channel="791" />
+		<Station Image="FoxNews.png" Name="Fox News" Channel="786" />
+		<Station Image="FoxSportsMidwest.png" Name="Fox Sports Midwest" Channel="230" />
+		<Station Image="FX.png" Name="FX" Channel="784" />
+		<Station Image="HGTV.png" Name="HGTV" Channel="30" />
+		<Station Image="HistoryChannel.png" Name="History Channel" Channel="766" />
+		<Station Image="MLBNetwork.png" Name="MLB Network" Channel="204" />
+		<Station Image="MSNBC.png" Name="MSNBC" Channel="790" />
+		<Station Image="MTV.png" Name="MTV" Channel="42" />
+		<Station Image="MTV2.png" Name="MTV2" Channel="140" />
+		<Station Image="NatGeo.png" Name="Nat Geo" Channel="57" />
+		<Station Image="NBCSportsNetwork.png" Name="NBC Sports Network" Channel="54" />
+		<Station Image="Nickelodeon.png" Name="Nickelodeon" Channel="32" />
+		<Station Image="NickJr.png" Name="Nick Jr" Channel="119" />
+		<Station Image="Nicktoons.png" Name="Nicktoons" Channel="115" />
+		<Station Image="OutdoorChannel.png" Name="Outdoor Channel" Channel="232" />
+		<Station Image="PBS.png" Name="PBS" Channel="9" />
+		<Station Image="Syfy.png" Name="Syfy" Channel="73" />
+		<Station Image="TBN.png" Name="TBN" Channel="221" />
+		<Station Image="TBS.png" Name="TBS" Channel="222" />
+		<Station Image="TheWeatherChannel.png" Name="The Weather Channel" Channel="231" />
+		<Station Image="TLC.png" Name="TLC" Channel="236" />
+		<Station Image="TNT.png" Name="TNT" Channel="781" />
+		<Station Image="USA.png" Name="USA" Channel="782" />
+		<Station Image="VH1.png" Name="VH1" Channel="871" />
+	</Stations>
+</Provider>
